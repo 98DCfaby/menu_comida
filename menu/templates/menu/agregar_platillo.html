@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color:rgba(241, 143, 14, 0.27); /* Fondo claro */
+            margin: 0;
+            padding: 0;
+            text-align: center; /* Centra el contenido del cuerpo */
+        }
+
+        /* Contenedor del logo y el título */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Logo */
+        .logo {
+            width: 150px; /* Ajusta el tamaño del logo */
+            margin-bottom: 10px;
+        }
+
+        /* Estilo del título */
+        h1 {
+            color: #343a40; /* Gris oscuro */
+            font-size: 36px;
+        }
+
+        /* Lista */
+        ul {
+            list-style-type: none; /* Quita los puntos de la lista */
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+        /* Botón general */
+        button, .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover, .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Botón de eliminar */
+        .btn-danger {
+            background-color: #FF4C4C;
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Platillo</title>
+</head>
+<body>
+    <h1>Agregar Platillo</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+    <a href="{% url 'menu_principal' %}" class="btn">Volver al menú principal</a>
+</body>
+<h2>Platillos Existentes</h2>
+<table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Información Nutricional</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for platillo in platillos %}
+            <tr>
+                <td>{{ platillo.nombre }}</td>
+                <td>{{ platillo.descripcion }}</td>
+                <td>{{ platillo.informacion_nutricional }}</td>
+                <td>{{ platillo.fecha }}</td>
+                <td>
+                    <a href="{% url 'editar_platillo' platillo.id %}" class="btn">Editar</a>
+                    <form action="{% url 'eliminar_platillo' platillo.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" style="background-color: #FF4C4C;">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay platillos disponibles</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</html>

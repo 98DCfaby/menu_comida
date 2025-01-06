@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ platillo.nombre }}</title>
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(241, 143, 14, 0.27); /* Fondo claro */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Título principal */
+        h1 {
+            color: #343a40; /* Gris oscuro */
+            font-size: 36px;
+            margin-top: 20px;
+        }
+
+        /* Información del platillo */
+        p {
+            font-size: 18px;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        /* Encabezado de comentarios */
+        h2 {
+            color: #343a40;
+            margin: 20px 0;
+        }
+
+        /* Lista de comentarios */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            width: 60%;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        li {
+            font-size: 16px;
+            color: #555;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        /* Enlaces */
+        a {
+            display: inline-block;
+            margin: 15px 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ platillo.nombre }}</h1>
+    <p><strong>Descripción:</strong> {{ platillo.descripcion }}</p>
+    <p><strong>Información Nutricional:</strong> {{ platillo.informacion_nutricional }}</p>
+    <p><strong>Calificación Promedio:</strong> {{ platillo.calificacion_promedio }}</p>
+
+    <h2>Comentarios</h2>
+    <ul>
+        {% for comentario in platillo.comentarios.all %}
+            <li><strong>{{ comentario.usuario }}</strong>: {{ comentario.comentario }} (Calificación: {{ comentario.calificacion }})</li>
+        {% empty %}
+            <li>No hay comentarios disponibles para este platillo.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'agregar_comentario' platillo.id %}">Agregar Comentario</a>
+    <a href="{% url 'menu_principal' %}">Volver al menú principal</a>
+</body>
+</html>

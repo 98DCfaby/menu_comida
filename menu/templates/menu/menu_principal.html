@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú del Día</title>
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(247, 184, 121, 0.77); /* Fondo claro */
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjfyBHkwxTae6dUidQ2hvin_tbEmVoQpgwJw&s'); /* URL de la imagen */
+            background-size: cover; /* Asegura que la imagen cubra toda el área */
+            background-position: center; /* Centra la imagen */
+            background-attachment: fixed; /* Fija la imagen mientras se desplaza la página */
+            margin: 0;
+            padding: 0;
+            text-align: center; /* Centra el contenido del cuerpo */
+        }
+
+        /* Contenedor del logo y el título */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Logo */
+        .logo {
+            width: 250px; /* Ajusta el tamaño del logo */
+            margin-bottom: 10px;
+        }
+
+        /* Estilo del título */
+        h1 {
+            color: #343a40; /* Gris oscuro */
+            font-size: 36px;
+        }
+
+        /* Lista */
+        ul {
+            list-style-type: none; /* Quita los puntos de la lista */
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        /* Links de los platillos */
+        a {
+            text-decoration: none; /* Quita el subrayado */
+            color: rgba(0, 123, 255, 0.57); /* Azul */
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color:rgb(0, 0, 0); /* Azul más oscuro */
+        }
+
+        /* Botón para agregar platillo */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 20px; /* Espacio entre lista y botón */
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor del logo y título -->
+    <div class="header">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH_2r3xPhAVDHid9xseaF_ULHID6KIIk4QIw&s" alt="Logo" class="logo">
+        <h1>Menú del Día</h1>
+    </div>
+
+    <!-- Lista de platillos -->
+    <ul>
+        {% for platillo in platillos %}
+            <li>
+                <a href="{% url 'detalle_platillo' platillo.id %}">{{ platillo.nombre }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Botón para agregar platillo -->
+    <a href="{% url 'agregar_platillo' %}" class="btn">Agregar Platillo</a>
+</body>
+</html>

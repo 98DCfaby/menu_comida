@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Comentario</title>
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(241, 143, 14, 0.27); /* Fondo claro */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Título principal */
+        h1 {
+            color: #343a40; /* Gris oscuro */
+            font-size: 36px;
+            margin-top: 20px;
+        }
+
+        /* Información del comentario */
+        p {
+            font-size: 18px;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        /* Botones */
+        button, a {
+            display: inline-block;
+            margin: 15px 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #FF4C4C;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, a:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Enlace de regreso */
+        a {
+            background-color: #007BFF;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Eliminar Comentario de {{ platillo.nombre }}</h1>
+    <p><strong>Usuario:</strong> {{ comentario.usuario }}</p>
+    <p><strong>Comentario:</strong> {{ comentario.comentario }}</p>
+    <p><strong>Calificación:</strong> {{ comentario.calificacion }}</p>
+
+    <!-- Formulario para confirmar eliminación -->
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Eliminar Comentario</button>
+    </form>
+
+    <!-- Enlace para volver al detalle del platillo -->
+    <a href="{% url 'detalle_platillo' platillo.id %}">Volver al detalle del platillo</a>
+</body>
+</html>

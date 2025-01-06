@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Comentario</title>
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(241, 143, 14, 0.27); /* Fondo claro */
+            margin: 0;
+            padding: 0;
+            text-align: center; /* Centra el contenido del cuerpo */
+        }
+
+        /* Contenedor del título */
+        h1 {
+            color: #343a40; /* Gris oscuro */
+        }
+
+        /* Estilo del formulario */
+        form {
+            margin: 20px auto;
+            width: 60%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Botones */
+        button, .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Enlace para volver */
+        .btn-back {
+            margin-top: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Editar Comentario para {{ platillo.nombre }}</h1>
+
+    <!-- Formulario para editar comentario -->
+    <form method="post">
+        {% csrf_token %}
+        <label>Usuario:</label>
+        <input type="text" name="usuario" value="{{ comentario.usuario }}" required>
+
+        <label>Comentario:</label>
+        <textarea name="comentario" required>{{ comentario.comentario }}</textarea>
+
+        <label>Calificación:</label>
+        <input type="number" name="calificacion" value="{{ comentario.calificacion }}" min="1" max="5" required>
+
+        <button type="submit">Guardar cambios</button>
+    </form>
+
+    <!-- Botón para volver al detalle del platillo -->
+    <a href="{% url 'detalle_platillo' platillo.id %}" class="btn btn-back">Volver al detalle del platillo</a>
+</body>
+</html>

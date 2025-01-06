@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentarios para {{ platillo.nombre }}</title>
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(241, 143, 14, 0.27); /* Fondo claro */
+            margin: 0;
+            padding: 0;
+            text-align: center; /* Centra el contenido del cuerpo */
+        }
+
+        /* Contenedor del título */
+        h1, h2 {
+            color: #343a40; /* Gris oscuro */
+            margin-top: 20px;
+        }
+
+        /* Estilo del formulario */
+        form {
+            margin: 20px auto;
+            width: 60%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Botones */
+        button, .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Botón de eliminar */
+        .btn-danger {
+            background-color: #FF4C4C;
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Tabla de comentarios */
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+            background-color: #fff;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        /* Enlace al menú principal */
+        .btn-menu {
+            margin-top: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Agregar Comentario para {{ platillo.nombre }}</h1>
+
+    <!-- Formulario para agregar nuevo comentario -->
+    <form method="post">
+        {% csrf_token %}
+        <label>Usuario:</label>
+        <input type="text" name="usuario" required>
+
+        <label>Comentario:</label>
+        <textarea name="comentario" required></textarea>
+
+        <label>Calificación:</label>
+        <input type="number" name="calificacion" min="1" max="5" required>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <!-- Mostrar los comentarios existentes -->
+    <h2>Comentarios:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Comentario</th>
+                <th>Calificación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comentario in comentarios %}
+            <tr>
+                <td>{{ comentario.usuario }}</td>
+                <td>{{ comentario.comentario }}</td>
+                <td>{{ comentario.calificacion }}</td>
+                <td>
+                    <a href="{% url 'editar_comentario' platillo.id comentario.id %}" class="btn">Editar</a>
+                    <a href="{% url 'eliminar_comentario' platillo.id comentario.id %}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No hay comentarios disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botón para volver al menú principal -->
+    <a href="{% url 'menu_principal' %}" class="btn btn-menu">Volver al menú principal</a>
+</body>
+</html>
